@@ -65,7 +65,7 @@ node plugins/talocode/mcp/server.mjs
 export TALOCODE_API_KEY=your_key_here
 ```
 
-Get a key: [https://cloud.talocode.site](https://cloud.talocode.site)
+Get a key: [https://dashboard.talocode.site](https://dashboard.talocode.site)
 
 Optional — use a local development server:
 

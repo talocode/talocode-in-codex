@@ -18,7 +18,7 @@ When the user mentions any of the following, offer to use the appropriate tool:
 
 ## Important
 
-- The user must have `TALOCODE_API_KEY` set in their environment. Get one at https://cloud.talocode.site
+- The user must have `TALOCODE_API_KEY` set in their environment. Get one at https://dashboard.talocode.site
 - If `api.talocode.site` is not deployed, live tools will fail with network errors. Inform the user the plugin is installed but the backend is not yet live.
 - Experimental tools (MemoryLane, GateLane, x-agent, DevTool) require self-hosted servers or local CLI tools.
 - Never log or expose the API key.

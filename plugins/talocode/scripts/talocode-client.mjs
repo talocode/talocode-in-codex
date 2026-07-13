@@ -68,7 +68,7 @@ async function fetchWithFallback(url, opts) {
 
 async function main() {
   if (!TALOCODE_API_KEY) {
-    bail("TALOCODE_API_KEY is required. Set it before using talocode-in-codex.\nGet your key at https://cloud.talocode.site");
+    bail("TALOCODE_API_KEY is required. Set it before using talocode-in-codex.\nGet your key at https://dashboard.talocode.site");
   }
 
   const { action, input } = parseArgs();

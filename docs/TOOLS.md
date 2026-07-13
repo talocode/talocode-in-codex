@@ -170,7 +170,7 @@ These tools are defined in MCP schemas but do not have route handlers deployed. 
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `TALOCODE_API_KEY` | Yes | — | Talocode Cloud API key. Get one at https://cloud.talocode.site |
+| `TALOCODE_API_KEY` | Yes | — | Talocode Cloud API key. Get one at https://dashboard.talocode.site |
 | `TALOCODE_API_BASE_URL` | No | `https://tera-api-v01.netlify.app` | Override the base URL for all live tools. Useful for local development. Falls back to `https://stacklane-api.netlify.app` on 404/503. |
 | `TALOCODE_MEMORYLANE_BASE_URL` | No | `TALOCODE_API_BASE_URL` | Override the base URL for MemoryLane tools |
 | `TALOCODE_GATELANE_BASE_URL` | No | `TALOCODE_API_BASE_URL` | Override the base URL for GateLane tools |
