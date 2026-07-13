@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 const TALOCODE_API_KEY = process.env.TALOCODE_API_KEY || "";
-const TALOCODE_API_BASE_URL = process.env.TALOCODE_API_BASE_URL || "https://api.talocode.site";
+const PRIMARY_API = "https://tera-api-v01.netlify.app";
+const SECONDARY_API = "https://stacklane-api.netlify.app";
+const TALOCODE_API_BASE_URL = process.env.TALOCODE_API_BASE_URL || PRIMARY_API;
 
 const REQUEST_TIMEOUT_MS = 60_000;
 
@@ -50,40 +52,17 @@ function parseArgs() {
   return { action, input };
 }
 
-async function apiPost(path, body) {
-  const url = `${TALOCODE_API_BASE_URL}${path}`;
+async function fetchWithFallback(url, opts) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
+  opts.signal = controller.signal;
   try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${TALOCODE_API_KEY}`,
-      },
-      body: JSON.stringify(body),
-      signal: controller.signal,
-    });
-
-    const text = await res.text();
-    if (!res.ok) {
-      bail(`[${path}] API error ${res.status}: ${text}`);
-    }
-
-    try {
-      const json = JSON.parse(text);
-      console.log(JSON.stringify(json, null, 2));
-    } catch {
-      console.log(text);
-    }
-  } catch (err) {
-    if (err.name === "AbortError") {
-      bail(`[${path}] Request timed out after ${REQUEST_TIMEOUT_MS}ms`);
-    }
-    bail(`[${path}] Network error: ${err.message}`);
-  } finally {
+    const res = await fetch(url, opts);
     clearTimeout(timer);
+    return res;
+  } catch (err) {
+    clearTimeout(timer);
+    throw err;
   }
 }
 
@@ -176,40 +155,45 @@ async function main() {
     ? process.env[`TALOCODE_${action.split("-")[0].toUpperCase()}_BASE_URL`] || TALOCODE_API_BASE_URL
     : TALOCODE_API_BASE_URL;
 
-  const url = `${baseUrl}${route.path}`;
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  // ── Fallback: try primary URL, then secondary on failure ─────
+  const urls = [baseUrl];
+  if (baseUrl !== SECONDARY_API) urls.push(SECONDARY_API);
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${TALOCODE_API_KEY}`,
-      },
-      body: JSON.stringify(body),
-      signal: controller.signal,
-    });
-
-    const text = await res.text();
-    if (!res.ok) {
-      bail(`[${route.path}] API error ${res.status}: ${text}`);
-    }
-
+  let lastErr = null;
+  for (const tryUrl of urls) {
+    const url = `${tryUrl}${route.path}`;
     try {
-      const json = JSON.parse(text);
-      console.log(JSON.stringify(json, null, 2));
-    } catch {
-      console.log(text);
+      const res = await fetchWithFallback(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${TALOCODE_API_KEY}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const text = await res.text();
+      if (!res.ok) {
+        lastErr = `[${route.path}] API error ${res.status} from ${tryUrl}: ${text}`;
+        if (res.status === 404 || res.status === 503) continue;
+        bail(lastErr);
+      }
+
+      try {
+        const json = JSON.parse(text);
+        console.log(JSON.stringify(json, null, 2));
+      } catch {
+        console.log(text);
+      }
+      return;
+    } catch (err) {
+      if (err.name === "AbortError") {
+        bail(`[${route.path}] Request timed out after ${REQUEST_TIMEOUT_MS}ms`);
+      }
+      lastErr = `[${route.path}] Network error from ${tryUrl}: ${err.message}`;
     }
-  } catch (err) {
-    if (err.name === "AbortError") {
-      bail(`[${route.path}] Request timed out after ${REQUEST_TIMEOUT_MS}ms`);
-    }
-    bail(`[${route.path}] Network error: ${err.message}`);
-  } finally {
-    clearTimeout(timer);
   }
+  bail(lastErr);
 }
 
 main().catch((err) => bail(err.message));

@@ -22,7 +22,7 @@ Each tool description lists:
 
 **Required:** `TALOCODE_API_KEY`
 
-All Tera routes are deployed as part of the Talocode Cloud API at `api.talocode.site`. If the site is not yet serving traffic, these tools will fail with a network error.
+Tera routes are deployed and serving at `tera-api-v01.netlify.app`. The companion script defaults to this URL. To use a different backend, set `TALOCODE_API_BASE_URL`.
 
 ---
 
@@ -30,11 +30,15 @@ All Tera routes are deployed as part of the Talocode Cloud API at `api.talocode.
 
 | Tool | Status | Endpoint | Credits |
 |------|--------|----------|---------|
-| `skills_generate` | live | `POST /v1/skills/generate/github-profile` | 80–100 |
+| `skills_generate` | deploy-pending | `POST /v1/skills/generate/github-profile` | 80–100 |
 
 **Required:** `TALOCODE_API_KEY`
 
 Generates AI skill packs (SKILL.md) compatible with Cursor, Claude Code, OpenCode, and Codra. Supports `type` parameter: `github-profile`, `github-repo`, `docs`, or `text`.
+
+**Status:** Route handler is coded and pushed to `stacklane-api-deploy` (commit `a5d87b2`). Deployment is blocked by Netlify account credit limit. Will auto-deploy when credits reset or are added.
+
+**Workaround:** Set `TALOCODE_API_BASE_URL` to your own hosted instance, or wait for Netlify credits to reset.
 
 ---
 
@@ -42,13 +46,15 @@ Generates AI skill packs (SKILL.md) compatible with Cursor, Claude Code, OpenCod
 
 | Tool | Status | Endpoint | Credits |
 |------|--------|----------|---------|
-| `searchlane_query` | live | `POST /v1/searchlane/query` | 5 |
-| `searchlane_news` | live | `POST /v1/searchlane/news` | 8 |
-| `searchlane_research` | live | `POST /v1/searchlane/research` | 30 |
+| `searchlane_query` | deploy-pending | `POST /v1/searchlane/query` | 5 |
+| `searchlane_news` | deploy-pending | `POST /v1/searchlane/news` | 8 |
+| `searchlane_research` | deploy-pending | `POST /v1/searchlane/research` | 30 |
 
 **Required:** `TALOCODE_API_KEY`
 
-SearchLane routes are deployed as part of the Stacklane API at `api.talocode.site`.
+**Status:** Route handlers are coded in `stacklane-api-deploy` but not yet deployed. Blocked by Netlify credit limit.
+
+**Workaround:** Set `TALOCODE_API_BASE_URL` to your own hosted instance, or wait for Netlify credits to reset.
 
 ---
 
@@ -56,12 +62,12 @@ SearchLane routes are deployed as part of the Stacklane API at `api.talocode.sit
 
 | Tool | Status | Endpoint | Credits |
 |------|--------|----------|---------|
-| `geolane_audit` | live | `POST /v1/geolane/audit` | 40 |
-| `geolane_compare` | live | `POST /v1/geolane/compare` | 50 |
+| `geolane_audit` | deploy-pending | `POST /v1/geolane/audit` | 40 |
+| `geolane_compare` | deploy-pending | `POST /v1/geolane/compare` | 50 |
 
 **Required:** `TALOCODE_API_KEY`
 
-GeoLane routes are deployed as part of the Stacklane API at `api.talocode.site`.
+**Status:** Route handlers are coded in `stacklane-api-deploy` but not yet deployed. Blocked by Netlify credit limit.
 
 ---
 
@@ -69,12 +75,12 @@ GeoLane routes are deployed as part of the Stacklane API at `api.talocode.site`.
 
 | Tool | Status | Endpoint | Credits |
 |------|--------|----------|---------|
-| `agent_browser_check` | live | `POST /v1/agent-browser/check` | 5 |
-| `agent_browser_screenshot` | live | `POST /v1/agent-browser/screenshot` | 8 |
+| `agent_browser_check` | deploy-pending | `POST /v1/agent-browser/check` | 5 |
+| `agent_browser_screenshot` | deploy-pending | `POST /v1/agent-browser/screenshot` | 8 |
 
 **Required:** `TALOCODE_API_KEY`
 
-Agent Browser routes are deployed as part of the Stacklane API at `api.talocode.site`.
+**Status:** Route handlers are coded in `stacklane-api-deploy` but not yet deployed. Blocked by Netlify credit limit.
 
 ---
 
@@ -82,11 +88,11 @@ Agent Browser routes are deployed as part of the Stacklane API at `api.talocode.
 
 | Tool | Status | Endpoint | Credits |
 |------|--------|----------|---------|
-| `invoicelane_extract` | live | `POST /v1/invoicelane/extract` | 20 |
+| `invoicelane_extract` | deploy-pending | `POST /v1/invoicelane/extract` | 20 |
 
 **Required:** `TALOCODE_API_KEY`
 
-InvoiceLane routes are deployed as part of the Stacklane API at `api.talocode.site`.
+**Status:** Route handlers are coded in `stacklane-api-deploy` but not yet deployed. Blocked by Netlify credit limit.
 
 ---
 
@@ -165,7 +171,7 @@ These tools are defined in MCP schemas but do not have route handlers deployed. 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `TALOCODE_API_KEY` | Yes | — | Talocode Cloud API key. Get one at https://cloud.talocode.site |
-| `TALOCODE_API_BASE_URL` | No | `https://api.talocode.site` | Override the base URL for all live tools. Useful for local development. |
+| `TALOCODE_API_BASE_URL` | No | `https://tera-api-v01.netlify.app` | Override the base URL for all live tools. Useful for local development. Falls back to `https://stacklane-api.netlify.app` on 404/503. |
 | `TALOCODE_MEMORYLANE_BASE_URL` | No | `TALOCODE_API_BASE_URL` | Override the base URL for MemoryLane tools |
 | `TALOCODE_GATELANE_BASE_URL` | No | `TALOCODE_API_BASE_URL` | Override the base URL for GateLane tools |
 | `TALOCODE_X_AGENT_BASE_URL` | No | `TALOCODE_API_BASE_URL` | Override the base URL for x-agent tools |
