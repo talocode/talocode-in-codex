@@ -1,3 +1,8 @@
 node_modules/
 .env
 *.log
+demo/*.mp4
+demo/talocode-in-codex-demo-video/dist/
+demo/talocode-in-codex-demo-video/public/bg-music.aac
+demo/talocode-in-codex-demo-video/node_modules/
+
