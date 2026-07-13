@@ -1,7 +1,7 @@
 {
   "name": "talocode",
-  "version": "0.1.0",
-  "description": "Use Talocode AI tools from Codex — chat, code review, writing, skill generation, and more.",
+  "version": "0.2.0",
+  "description": "Talocode inside Codex — use Talocode APIs as MCP tools.",
   "author": {
     "name": "Talocode",
     "url": "https://talocode.site"
@@ -12,32 +12,42 @@
   "keywords": [
     "talocode",
     "tera",
-    "codra",
-    "codex",
+    "searchlane",
+    "geolane",
+    "memorylane",
+    "gatelane",
     "mcp",
+    "codex",
     "code-review",
     "skills",
-    "ai"
+    "ai",
+    "agents"
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
+  "env": {
+    "required": ["TALOCODE_API_KEY"],
+    "optional": [
+      "TALOCODE_API_BASE_URL",
+      "TALOCODE_MEMORYLANE_BASE_URL",
+      "TALOCODE_GATELANE_BASE_URL",
+      "TALOCODE_X_AGENT_BASE_URL"
+    ]
+  },
   "interface": {
     "displayName": "Talocode",
-    "shortDescription": "Chat, review code, rewrite text, generate skills, and more with Talocode AI",
-    "longDescription": "Access Talocode Cloud AI capabilities from Codex. Use Tera for chat, code review, code explanation, code writing, text rewriting, and content drafting. Generate AI skill packs from GitHub profiles, repos, docs, and text.",
+    "shortDescription": "Talocode inside Codex — use Talocode APIs as MCP tools.",
+    "longDescription": "Access Talocode Cloud AI capabilities from Codex. Use Tera for chat, code review, code explanation, code writing, text rewriting, and content drafting. Use SearchLane for web search, news, and research. Use GeoLane for geo-SEO auditing. Generate AI skill packs from GitHub profiles, repos, docs, and text. Experimental tools for MemoryLane, GateLane, x-agent, and DevTool.",
     "developerName": "Talocode",
     "category": "Developer Tools",
-    "capabilities": [
-      "Interactive",
-      "Read",
-      "Write"
-    ],
+    "capabilities": ["Interactive", "Read", "Write"],
     "websiteURL": "https://talocode.site",
     "defaultPrompt": [
       "Review this code with Tera",
       "Explain this piece of code",
-      "Chat with Tera AI",
-      "Generate a skill pack from this repo"
+      "Search the web with SearchLane",
+      "Generate a skill pack from this repo",
+      "Audit this URL with GeoLane"
     ],
     "brandColor": "#0a0a0a"
   }

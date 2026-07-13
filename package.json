@@ -1,10 +1,21 @@
 {
   "name": "talocode-in-codex",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
   "type": "module",
-  "description": "Codex plugin — Tera, Codra, Skills, ClipLoop, Tradia inside Codex / OpenCode / Claude Code",
+  "private": true,
+  "description": "Talocode inside Codex — use Talocode APIs as MCP tools.",
   "scripts": {
-    "test": "node --test tests/*.test.mjs"
-  }
+    "start": "node plugins/talocode/mcp/server.mjs",
+    "test": "node scripts/test-mcp.mjs && node --test tests/*.test.mjs"
+  },
+  "keywords": [
+    "talocode",
+    "codex",
+    "mcp",
+    "tera",
+    "searchlane",
+    "geolane",
+    "agents",
+    "plugin"
+  ]
 }
