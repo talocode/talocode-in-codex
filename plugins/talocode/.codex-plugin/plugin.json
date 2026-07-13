@@ -1,0 +1,44 @@
+{
+  "name": "talocode",
+  "version": "0.1.0",
+  "description": "Use Talocode AI tools from Codex — chat, code review, writing, skill generation, and more.",
+  "author": {
+    "name": "Talocode",
+    "url": "https://talocode.site"
+  },
+  "homepage": "https://github.com/talocode/talocode-in-codex",
+  "repository": "https://github.com/talocode/talocode-in-codex",
+  "license": "MIT",
+  "keywords": [
+    "talocode",
+    "tera",
+    "codra",
+    "codex",
+    "mcp",
+    "code-review",
+    "skills",
+    "ai"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Talocode",
+    "shortDescription": "Chat, review code, rewrite text, generate skills, and more with Talocode AI",
+    "longDescription": "Access Talocode Cloud AI capabilities from Codex. Use Tera for chat, code review, code explanation, code writing, text rewriting, and content drafting. Generate AI skill packs from GitHub profiles, repos, docs, and text.",
+    "developerName": "Talocode",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://talocode.site",
+    "defaultPrompt": [
+      "Review this code with Tera",
+      "Explain this piece of code",
+      "Chat with Tera AI",
+      "Generate a skill pack from this repo"
+    ],
+    "brandColor": "#0a0a0a"
+  }
+}

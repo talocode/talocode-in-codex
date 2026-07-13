@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "talocode": {
+      "command": "node",
+      "args": [
+        "./mcp/server.mjs"
+      ],
+      "cwd": "."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "talocode-in-codex",
+  "interface": {
+    "displayName": "Talocode in Codex"
+  },
+  "plugins": [
+    {
+      "name": "talocode",
+      "source": {
+        "source": "local",
+        "path": "./plugins/talocode"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
